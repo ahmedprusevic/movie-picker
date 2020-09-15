@@ -11,11 +11,14 @@ const app = express();
 //Connect database
 connectDB();
 
+// Initialize middleware insead installing bodyparser
+app.use(express.json({ extended: false }));
+
 //On get request send the following!
 app.get('/', (req,res) => res.send('API Running'));
 
 // Defining routes
-// This way in users.js file get request to "/" is /api/users
+//e.g This way in users.js file get request to "/" is /api/users
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/auth', require('./routes/api/auth'))
 app.use('/api/profile', require('./routes/api/profile'))
