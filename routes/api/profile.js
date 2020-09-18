@@ -53,7 +53,7 @@ router.post('/',auth, async (req, res) => {
             );
         return res.json(profile);
         }
-        // Create
+        // Create 
         profile = new Profile(profileFields);
 
         await profile.save();
@@ -61,6 +61,23 @@ router.post('/',auth, async (req, res) => {
     }catch(err){
         console.error(err.message);
         res.status(500).send("Server Error");
+    }
+});
+
+// Routes are made instead app.delete with router.delete() method
+// @route Delete api/profile , user and posts
+// Private
+
+router.delete('/',auth,  async (req, res) => {
+    try {
+        // Remove profile
+        await Profile.findOneAndRemove({ user: req.user.id });
+        // Remove user
+        await User.findOneAndRemove({ _id: req.user.id });
+        res.json({ msg: "User removed" });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 

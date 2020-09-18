@@ -1,11 +1,40 @@
 // To be able to make routes in separate folders we need express router
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
+const auth = require('../../middleware/auth');
 
-// Routes are made instead app.get with router.get() method
+const Post = require('../../models/Post');
+const Profile = require('../../models/Profile');
+const User = require('../../models/User');
+
+// Routes are made instead app.get with router.POST() method
 // @route GET api/posts
-// Public route
-router.get('/', (req,res) => res.send('Posts route'));
+// Private route
+router.post('/',[
+    auth, [
+    check('text', 'Text is required').not().isEmpty()
+    ]
+ ], async (req,res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+    try {
+    const user = await User.findById(req.user.id).select('-password');
+    const newPost = new Post ({
+        text: req.body.text,
+        name: user.name,
+        user: req.user.id
+    });
+    const post = await newPost.save();
+    res.json(post);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+    
+});
 
 // Exporting Route
 
