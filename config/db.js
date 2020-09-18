@@ -13,7 +13,7 @@ const connectDB = async () => {
     try{
 //try to connect to the data base using mongoURI link from default.json , you got this link from mongoDB atlas where you created cluster
 //after starting a server you've got warning to pass in useNewUrlParser as true and useUnifiedTopology as true.
-    await mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+    await mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
     console.log("Data base connected.");
     } catch(err){
         console.error(err.message);

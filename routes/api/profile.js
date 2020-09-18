@@ -4,6 +4,8 @@ const router = express.Router();
 
 // Bring in the auth middleware since we will have private routes
 const auth = require('../../middleware/auth');
+const { watch } = require('../../models/Profile');
+
 
 // Bringing in Profile and User models
 const Profile = require('../../models/Profile');
@@ -22,6 +24,43 @@ router.get('/me', auth, async (req,res) => {
     } catch(err){
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+// Routes are made instead app.get with router.post() method
+// @route Create or update api/profile
+// Private
+
+router.post('/',auth, async (req, res) => {
+    const { watched, favourite } = req.body;
+    const profileFields = {};
+    profileFields.user = req.user.id
+    if(watched){
+        profileFields.watched = watched.split(',').map(watched => watched.trim()); 
+    }
+    if(favourite){
+        profileFields.favourite = favourite.split(',').map(favourite => favourite.trim()); 
+    }
+    try{
+        let profile = await Profile.findOne({ user: req.user.id });
+
+        if(profile){
+            // Update
+            profile = await Profile.findOneAndUpdate(
+                { user: req.user.id }, 
+                { $set: profileFields},
+                { new: true }
+            );
+        return res.json(profile);
+        }
+        // Create
+        profile = new Profile(profileFields);
+
+        await profile.save();
+        res.json(profile);
+    }catch(err){
+        console.error(err.message);
+        res.status(500).send("Server Error");
     }
 });
 
