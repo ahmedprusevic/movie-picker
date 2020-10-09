@@ -22,13 +22,12 @@ const Login = () => {
             <div className="form-container">
                 <div className="dark-overlay">
                     <section className="container">
-                        <div className="alert alert-danger">Invalid Credentials</div>
                         <div className="form-background">
                             <h1 className="large text-white form-heading">
                                 Sign In
                             </h1>
                             <p className="lead text-white"> Sign into your account</p>
-                            <form action="home.html" className="form">
+                            <form action="home.html" className="form" onSubmit={e => handleSubmit(e) }>
                                 <div className="form-group">
                                     <input 
                                     type="text" 

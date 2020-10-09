@@ -10,7 +10,7 @@ const Landing = () => {
                 <p className="lead">Not sure which movie to watch? Register and generate random movies to watch. Also get recomendations from other people.</p>
                 <div className="buttons">
                     <Link to="/register" className="btn btn-primary">Register</Link>
-                    <Link href="/login" className="btn btn-secondary">Login</Link>
+                    <Link to="/login" className="btn btn-secondary">Login</Link>
                 </div>
             </div>
             </div>
