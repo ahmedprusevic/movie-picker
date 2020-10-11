@@ -8,11 +8,13 @@ const connectDB = require('./config/db');
 //Run the required package
 const app = express();
 
+
 //Connect database
 connectDB();
 
 // Initialize middleware insead installing bodyparser
 app.use(express.json({ extended: false }));
+
 
 //On get request send the following!
 app.get('/', (req,res) => res.send('API Running'));

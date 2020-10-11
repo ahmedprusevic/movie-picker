@@ -1,10 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../actions/auth';
+import profile from '../img/profile.jpg';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+
+    const [isOpen, setOpen] = useState(false);
+
+    const open = e => {
+        setOpen(!isOpen)
+    }
 
     const guestLinks = (
         <ul>
@@ -14,11 +21,11 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     );
     const authLinks = (
         <ul>
-            <li><Link class="dorp-click"><img src="../img/profile.jpg" alt="profilna" className="profile-img" /> <i className="fas fa-arrow-down text-white"></i></Link> 
-                <div className="drop-down">
-                    <Link className="drop-link" to="register.html">Profile</Link>
-                    <Link className="drop-link" to="register.html">Recommendations</Link>
-                    <Link className="drop-link" onClick= {logout}>Log Out</Link>
+            <li><span className="dorp-click" onClick={open}><img src={profile} alt="profilna" className="profile-img" /> <i className={isOpen ? "fas fa-times text-white" : "fas fa-arrow-down text-white"}></i></span> 
+                <div className="drop-down" style={{ display: isOpen ? "block" : "none"}}>
+                    <Link className="drop-link" to="/profile">Profile</Link>
+                    <Link className="drop-link" to="/recommendations">Recommendations</Link>
+                    <Link className="drop-link" to= "" onClick= {logout}>Log Out</Link>
                 </div>
             </li>
         </ul>
