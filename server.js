@@ -2,6 +2,7 @@
 
 const express = require('express');
 
+
 //Require the connectDB function from config/db (initialize after you run express!!)
 const connectDB = require('./config/db');
 
