@@ -250,7 +250,16 @@ const ids = [
 
 const randomMovies = () => {
     const randId = [];
-    for(let i=0; i <= 18; i++){
+    while(randId.length < 18){
         let num = Math.floor(Math.random()* ids.length);
+        if(randId.includes(ids[num])){
+            continue;
+        } else {
+            randId.push(ids[num]);
+        }
+        
     }
+    return randId;
 }
+
+export { randomMovies }
