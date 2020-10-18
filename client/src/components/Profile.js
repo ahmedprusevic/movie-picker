@@ -10,7 +10,7 @@ const Profile = ({ getProfile, auth: { user }, profile: { profile, loading } }) 
 
     useEffect(() => {
         getProfile();
-    }, []);
+    }, [loading]);
 
     return (
         
@@ -19,7 +19,10 @@ const Profile = ({ getProfile, auth: { user }, profile: { profile, loading } }) 
             <h1 className="large text-primary"> Profile Dashboard </h1>
             <p className="lead text-white"> Welcome { user && user.name }, here you can manage your profile </p>
 
-            {profile !== null ? <Fragment><Alert /> </Fragment> : <Fragment>
+            {profile !== null ? <Fragment>
+                <Alert /> 
+                
+                </Fragment> : <Fragment>
                 <p className='text-white my-1'> You still havent created profile, tell us about your favourite movies and movies you watched </p>
 
                 <div className="dash-buttons">
