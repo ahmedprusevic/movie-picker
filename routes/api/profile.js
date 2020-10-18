@@ -36,10 +36,10 @@ router.post('/',auth, async (req, res) => {
     const profileFields = {};
     profileFields.user = req.user.id
     if(watched){
-        profileFields.watched = watched.split(',').map(watched => watched.trim()); 
+        profileFields.watched = watched.map(watched => watched.trim()); 
     }
     if(favourite){
-        profileFields.favourite = favourite.split(',').map(favourite => favourite.trim()); 
+        profileFields.favourite = favourite.map(favourite => favourite.trim()); 
     }
     try{
         let profile = await Profile.findOne({ user: req.user.id });

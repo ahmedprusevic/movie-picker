@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Landing from './components/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import Profile from './components/Profile';
 import Home from './components/Home';
 import CreateProfile from './components/CreateProfile';
 import { loadUser } from './actions/auth';
@@ -38,6 +39,7 @@ const App = () => {
           <Route exact path = '/login' component = {Login} />
           <PrivateRoute exact path = '/home' component = {Home} />
           <PrivateRoute exact path = '/create-profile' component = {CreateProfile} />
+          <PrivateRoute exact path = '/profile' component = {Profile} />
         </Switch>
       </Fragment>
     </Router>

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { randomMovies } from '../imdbid';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import Spinner from './Spinner';
 
