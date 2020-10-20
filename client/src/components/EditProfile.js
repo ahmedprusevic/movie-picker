@@ -13,7 +13,6 @@ const EditProfile = ({ profile: {profile, loading}, createProfile, getProfile,  
     });
 
     const [movie, setMovie] = useState('');
-
     useEffect(() => {
         getProfile();
         setFormData({
@@ -23,6 +22,7 @@ const EditProfile = ({ profile: {profile, loading}, createProfile, getProfile,  
     }, [loading]);
 
     const { favourite, watched } = formData;
+
 
     const onChange = e => 
     setMovie(e.target.value); 

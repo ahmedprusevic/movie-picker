@@ -4,7 +4,7 @@ import axios from 'axios';
 import Spinner from './Spinner';
 
 
-const Home = props => {
+const Home = () => {
 
     const [movies, setMovies] = useState(randomMovies());
     
@@ -15,8 +15,13 @@ const Home = props => {
     useEffect(() => {
         const getMovies = () => {
                 movies.map(async (m) => {
-                    const movie = await axios.get(`https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?i=${m}&apikey=753aad9a`);
-                    setShowMovies(s => [...s, movie.data]);
+                    try {
+                        const movie = await axios.get(`https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?i=${m}&apikey=753aad9a`);
+                        setShowMovies(s => [...s, movie.data]);
+                    } catch (err) {
+                        console.error(err)
+                    }
+                    
                 })
             }
         getMovies();
