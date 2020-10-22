@@ -23,8 +23,8 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <ul>
             <li><span className="dorp-click" onClick={open}><img src={profile} alt="profilna" className="profile-img" /> <i className={isOpen ? "fas fa-times text-white" : "fas fa-arrow-down text-white"}></i></span> 
                 <div className="drop-down" style={{ display: isOpen ? "block" : "none"}}>
-                    <Link className="drop-link" to="/profile">Profile</Link>
-                    <Link className="drop-link" to="/recommendations">Recommendations</Link>
+                    <Link className="drop-link" onClick={open} to="/profile">Profile</Link>
+                    <Link className="drop-link" onClick={open} to="/recommendations">Recommendations</Link>
                     <Link className="drop-link" to= "" onClick= {logout}>Log Out</Link>
                 </div>
             </li>
