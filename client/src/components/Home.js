@@ -4,13 +4,15 @@ import { randomMovies } from "../imdbid";
 import axios from "axios";
 import Spinner from "./Spinner";
 import { connect } from "react-redux";
-import { addToFavourites, getProfile } from "../actions/profile";
+import { updateFavWat, getProfile } from "../actions/profile";
+import { setAlert } from "../actions/alert";
 import Alert from "./Alert";
 
 const Home = ({
-  addToFavourites,
+  updateFavWat,
   getProfile,
   profile: { profile, loading },
+  setAlert,
 }) => {
   const [movies, setMovies] = useState(randomMovies());
 
@@ -30,6 +32,10 @@ const Home = ({
       watched: loading || !profile.watched ? "" : profile.watched,
     });
   }, [loading]);
+
+  useEffect(() => {
+    updateFavWat(formData);
+  }, [favourite, watched]);
 
   useEffect(() => {
     const getMovies = () => {
@@ -53,27 +59,36 @@ const Home = ({
   };
 
   const addFav = (movie) => {
-        setFormData({ ...formData, favourite: [...favourite, movie.Title] });
-        console.log(formData)
+    if (!favourite.includes(movie.Title)) {
+      setFormData({ ...formData, favourite: [...favourite, movie.Title] });
+      setAlert("Added to favourites", "success");
+    } else {
+      setAlert("Movie already in favourites", "danger");
+    }
   };
 
-  const callApi = () => {
-      addToFavourites(formData);
-  }
+  const addWat = (movie) => {
+    if (!watched.includes(movie.Title)) {
+      setFormData({ ...formData, watched: [...watched, movie.Title] });
+      setAlert("Added to watched", "success");
+    } else {
+      setAlert("Movie already in watched", "danger");
+    }
+  };
 
   return (
     <section className="home">
       <div className="home-top">
+        <Alert />
         <h1 className="large card-heading text-white">
           Here are some random recommendations for you
         </h1>
-        <button className="btn btn-primary" onClick={() => handleClick()}>
-          <i className="fas fa-sync"></i> More movies
+        <button className="btn btn-primary my-2" onClick={() => handleClick()}>
+          <i className="fas fa-sync "></i> More movies
         </button>
-        <Alert />
       </div>
       <div className="card-layout">
-        {showMovies.length <= 17 ? (
+        {showMovies.length <= 1 ? (
           <Spinner />
         ) : (
           showMovies.map((movie) => {
@@ -95,9 +110,9 @@ const Home = ({
                       {" "}
                       <i className="fas fa-heart"></i>
                     </button>
-                    <button onClick={() => callApi()}>Submit</button>
                     <button
                       className="card-button card-button-watch"
+                      onClick={() => addWat(movie)}
                       data-tooltip="Add to watched"
                     >
                       {" "}
@@ -115,12 +130,15 @@ const Home = ({
 };
 
 Home.propTypes = {
-  addToFavourites: PropTypes.func.isRequired,
-  getProfile: PropTypes.func.isRequired
+  updateFavWat: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getProfile, addToFavourites })(Home);
+export default connect(mapStateToProps, { setAlert, getProfile, updateFavWat })(
+  Home
+);

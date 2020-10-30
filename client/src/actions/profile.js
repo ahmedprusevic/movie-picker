@@ -55,9 +55,9 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     }
 }
 
-// Add to favourites 
+// Add to favourites or watched
 
-export const addToFavourites = (formData) => async dispatch => {
+export const updateFavWat = (formData) => async dispatch => {
     try {
         const config = {
             headers: {
@@ -70,8 +70,6 @@ export const addToFavourites = (formData) => async dispatch => {
             type: GET_PROFILE,
             payload: res.data
         });
-
-        dispatch(setAlert('Added to Favourites', 'success'));
 
     }catch (err) {
         const errors = err.response.data.errors;
@@ -86,6 +84,7 @@ export const addToFavourites = (formData) => async dispatch => {
         });
     }
 }
+
 
 // Delete profile and account 
 
