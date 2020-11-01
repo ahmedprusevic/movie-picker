@@ -1,6 +1,8 @@
 import {
     GET_RECOMMENDATIONS,
     RECOMMENDATION_ERROR,
+    UPDATE_LIKES,
+    REMOVE_RECOMMENDATION
 } from '../actions/types';
 
 const initialState = {
@@ -20,12 +22,24 @@ export default function(state=initialState, action) {
                 recommendations: payload,
                 loading: false
             };
+        case REMOVE_RECOMMENDATION:
+            return {
+                ...state,
+                recommendations: state.recommendations.filter(rec => rec._id !== payload),
+                loading: false
+            }
         case RECOMMENDATION_ERROR:
             return {
                 ...state,
                 error: payload,
                 loading: false
             };
+        case UPDATE_LIKES:
+            return {
+                ...state,
+                recommendations: state.recommendations.map(rec => rec._id === payload.id ? {...rec, likes: payload.likes} : rec),
+                loading: false
+            }
         default:
             return state;
     }

@@ -4,6 +4,7 @@ import RecommendationItem from './RecommendationItem';
 import { connect } from 'react-redux';
 import { getRecommendations } from '../actions/recommendation';
 import Spinner from './Spinner';
+import Alert from './Alert';
 
 const Recommendations = ({ getRecommendations, recommendation: { recommendations, loading }}) => {
 
@@ -25,6 +26,7 @@ const Recommendations = ({ getRecommendations, recommendation: { recommendations
         <section className='container'>
             <h1 className='large text-primary'>Recommendations</h1>
             <p className='lead text-white'>Here are some recommendations from our users</p>
+            <Alert />
             {/* FORM */}
             <div className='posts'>
                 {recommendations.map(post => (

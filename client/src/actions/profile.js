@@ -91,7 +91,7 @@ export const updateFavWat = (formData) => async dispatch => {
 export const deleteAcc = () => async dispatch => {
     if(window.confirm('This can NOT be undone are you sure?')) {
         try {
-            const res = await axios.delete('/api/profile');
+            await axios.delete('/api/profile');
 
             dispatch({type: CLEAR_PROFILE});
             dispatch({ type: ACCOUNT_DELETED });
