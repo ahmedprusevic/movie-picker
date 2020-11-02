@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import RecommendationItem from './RecommendationItem';
+import RecommendationForm from './RecommendationFrom';
 import { connect } from 'react-redux';
 import { getRecommendations } from '../actions/recommendation';
 import Spinner from './Spinner';
 import Alert from './Alert';
+import RecommendationFrom from './RecommendationFrom';
 
 const Recommendations = ({ getRecommendations, recommendation: { recommendations, loading }}) => {
 
@@ -28,6 +30,7 @@ const Recommendations = ({ getRecommendations, recommendation: { recommendations
             <p className='lead text-white'>Here are some recommendations from our users</p>
             <Alert />
             {/* FORM */}
+            <RecommendationFrom />
             <div className='posts'>
                 {recommendations.map(post => (
                     <RecommendationItem key={post._id} post={post} />

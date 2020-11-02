@@ -13,7 +13,8 @@ const User = require('../../models/User');
 // Private route
 router.post('/',[
     auth, [
-    check('text', 'Text is required').not().isEmpty()
+    check('text', 'Text is required').not().isEmpty(),
+    check('title', 'Title is required').not().isEmpty()
     ]
  ], async (req,res) => {
     const errors = validationResult(req);
@@ -25,7 +26,8 @@ router.post('/',[
     const newPost = new Post ({
         text: req.body.text,
         name: user.name,
-        user: req.user.id
+        user: req.user.id,
+        title: req.body.title
     });
     const post = await newPost.save();
     res.json(post);

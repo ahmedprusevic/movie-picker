@@ -11,14 +11,14 @@ const RecommendationItem = ({
   removeLike,
   auth,
   deletePost,
-  post: { _id, text, name, user, likes, comments, date },
+  post: { _id, text, title, name, user, likes, comments, date },
 }) => {
   const [movie, setMovie] = useState();
 
   useEffect(() => {
     const getMovie = async () => {
       const movie = await axios.get(
-        `https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?s=${text}&apikey=753aad9a`
+        `https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?s=${title}&apikey=753aad9a`
       );
       if (movie.data.Response === "True") {
         setMovie(movie.data.Search[0]);
@@ -43,6 +43,8 @@ const RecommendationItem = ({
       </div>
       <div className="post-body">
         <h4 className="text-white">{movie ? `${movie.Title}` : text}</h4>
+
+        <p className='my-1 text-white'>{text}</p>
         <p className="my-1 text-white">
           {movie
             ? `${movie.Title} was filmed in ${movie.Year}. Movie's imdbID is ${movie.imdbID}`
