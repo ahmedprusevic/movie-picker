@@ -57,7 +57,7 @@ const RecommendationItem = ({
           <button className="btn" onClick={(e) => removeLike(_id)}>
             <i className="fas fa-thumbs-down"></i>
           </button>
-          <Link to={`/post/${_id}`} className="btn btn-secondary">
+          <Link to={`/recommendations/${_id}`} className="btn btn-secondary">
             Discussion ({comments.length})
           </Link>
           {!auth.loading && user === auth.user._id && (

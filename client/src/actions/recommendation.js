@@ -5,7 +5,8 @@ import {
   RECOMMENDATION_ERROR,
   REMOVE_RECOMMENDATION,
   UPDATE_LIKES,
-  ADD_RECOMMENDATION
+  ADD_RECOMMENDATION,
+  GET_RECOMMENDATION
 } from "./types";
 
 // Get Recommendations
@@ -101,6 +102,26 @@ export const addPost = (formData) => async (dispatch) => {
     });
 
     dispatch(setAlert('Post Created', 'success'));
+  } catch (err) {
+    dispatch({
+      type: RECOMMENDATION_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get single recommendation 
+
+export const getRecommendation = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/posts/${id}`);
+    
+    dispatch({
+      type: GET_RECOMMENDATION,
+      payload: res.data
+    });
+
+    
   } catch (err) {
     dispatch({
       type: RECOMMENDATION_ERROR,
