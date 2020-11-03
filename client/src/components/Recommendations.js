@@ -18,7 +18,6 @@ const Recommendations = ({ getRecommendations, recommendation: { recommendations
 
     useEffect(() => {
         const rec = recommendations.map(mov => mov.text);
-        console.log(recommendations);
         if(rec.length !== 0) {
         setMovies(s => rec) }
     }, [loading])
@@ -33,7 +32,7 @@ const Recommendations = ({ getRecommendations, recommendation: { recommendations
             <RecommendationFrom />
             <div className='posts'>
                 {recommendations.map(post => (
-                    <RecommendationItem key={post._id} post={post} />
+                    <RecommendationItem key={post._id} post={post} loading={post.loading}/>
                 ))}
             </div>
         </section>
