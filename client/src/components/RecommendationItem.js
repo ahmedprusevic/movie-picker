@@ -30,7 +30,7 @@ const RecommendationItem = ({
     };
 
     getMovie();
-  }, [text]);
+  }, []);
 
   return loading ? <Spinner /> : ( 
     <div className="post border-white my-1">

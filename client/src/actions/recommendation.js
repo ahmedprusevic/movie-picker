@@ -6,7 +6,9 @@ import {
   REMOVE_RECOMMENDATION,
   UPDATE_LIKES,
   ADD_RECOMMENDATION,
-  GET_RECOMMENDATION
+  GET_RECOMMENDATION,
+  ADD_COMMENT,
+  REMOVE_COMMENT
 } from "./types";
 
 // Get Recommendations
@@ -130,3 +132,49 @@ export const getRecommendation = (id) => async (dispatch) => {
   }
 };
 
+// Add Comment
+
+export const addComment = (recommendationId, formData) => async (dispatch) => {
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  try {
+    const res = await axios.post(`/api/posts/comment/${recommendationId}`, formData, config);
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Comment Added', 'success'));
+  } catch (err) {
+    dispatch({
+      type: RECOMMENDATION_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Delete Comment
+
+export const deleteComment = (recommendationId, commentId) => async (dispatch) => {
+
+  try {
+    const res = await axios.delete(`/api/posts/comment/${recommendationId}/${commentId}`);
+
+    dispatch({
+      type: REMOVE_COMMENT,
+      payload: commentId
+    });
+
+    dispatch(setAlert('Comment Removed', 'danger'));
+  } catch (err) {
+    dispatch({
+      type: RECOMMENDATION_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

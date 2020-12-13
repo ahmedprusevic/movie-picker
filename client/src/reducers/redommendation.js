@@ -4,7 +4,9 @@ import {
     UPDATE_LIKES,
     REMOVE_RECOMMENDATION,
     ADD_RECOMMENDATION,
-    GET_RECOMMENDATION
+    GET_RECOMMENDATION,
+    ADD_COMMENT,
+    REMOVE_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -53,6 +55,21 @@ export default function(state=initialState, action) {
                 ...state,
                 recommendations: state.recommendations.map(rec => rec._id === payload.id ? {...rec, likes: payload.likes} : rec),
                 loading: false
+            }
+        case ADD_COMMENT: 
+        return {
+            ...state,
+            recommendation: { ...state.post, comments: payload},
+            loading: false
+        }
+        case REMOVE_COMMENT:
+            return {
+                ...state,
+                recommendation: {
+                    ...state.recommendation,
+                    comments: state.recommendation.comments.filter(comment => comment._id !== payload),
+                    loading: false
+                }
             }
         default:
             return state;
